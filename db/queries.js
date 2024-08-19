@@ -117,6 +117,23 @@ module.exports = {
             throw error;
         }
     },
+    getFile: async (fileId) => {
+        try {
+            const file = await prisma.file.findFirst({
+                where: {
+                    id: fileId
+                },
+                include: {
+                    folder: true
+                }
+            })
+            return file;
+        }
+        catch(error) {
+            console.error('Error getting file', error);
+            throw error;  
+        }
+    },
     renameEntry: async(type, id, newName) => {
         try {
             const query = {

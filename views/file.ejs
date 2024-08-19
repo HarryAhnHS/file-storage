@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Storage</title>
+    <!-- Custom Styles -->
+    <!-- <link rel="stylesheet" href="/styles/styles.css"> -->
+    <!-- Tailwind CSS -->
+    <link href="/styles/tailwind-built.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen">
+    <%- include('./partials/header.ejs') %>
+    <div class="content flex-1 p-3">
+        <div>
+            <%= file.name %>
+            <%= file.size %>
+            <%= file.createdAt %>
+            <%= file.updatedAt %>
+        </div>
+        <div class="download">
+            <a href="/library/file/<%=file.id%>/download">Download</a>
+        </div>
+        
+    </div>
+</body>
+</html>

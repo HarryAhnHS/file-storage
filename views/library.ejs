@@ -27,7 +27,7 @@
                     <button type="submit">New Folder</button>
                 </form>
                 <form action="/library/<%= folder.id %>/upload" method="POST" enctype="multipart/form-data">
-                    <input type="file" name="uploaded_file" />
+                    <input type="file" name="uploaded_file" required/>
                     <button type="submit">Upload File</button>
                 </form>
             </div>
@@ -70,11 +70,24 @@
                 <% }) %>
                 <% folder.files.forEach(file => { %>
                     <tr class="file">
-                        <td><%= file.name %></td>
+                        <td><a href="/library/file/<%= file.id %>"><%= file.name %></a></td>
                         <td>File</td>
                         <td><%= file.size %> bytes</td>
                         <td><%= file.createdAt.toDateString() %></td>
                         <td><%= file.updatedAt.toDateString() %></td>
+                        <td>
+                            <button data-modal-toggle="edit-modal" 
+                                    edit-type="file" 
+                                    edit-target-id="<%= file.id %>"  
+                                    class="block px-4 py-2 text-sm text-gray-700">
+                                Edit
+                        </a>
+                            <form method="POST" action="/library/file/<%= file.id %>/delete">
+                                <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 <% }) %>
             </tbody>
