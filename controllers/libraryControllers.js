@@ -68,13 +68,13 @@ module.exports = {
     
             // Add file to database
             await db.addFile(originalname, result.secure_url, size, folderId);
-
-            // Clear temporary local download
-            fs.unlinkSync(path.join(__dirname, path));
     
             // Redirect back to the referring page
             const redirectUrl = req.get('Referer') || `/`;
             res.redirect(redirectUrl);
+            
+            // Clear temporary local download
+            fs.unlinkSync(path);
             
         } catch (error) {
             console.error('Upload failed:', error);

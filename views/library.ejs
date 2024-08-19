@@ -103,24 +103,45 @@
                             <td class="px-4 py-2"><%= file.formattedSize %></td>
                             <td class="px-4 py-2"><%= file.formattedCreatedAt %></td>
                             <td class="px-4 py-2"><%= file.formattedUpdatedAt %></td>
-                            <td class="px-4 py-2">
-                                <div class="flex gap-2 items-center">
-                                    <a href="/library/file/<%=file.id%>/download" class="text-sm text-blue-600 hover:text-blue-800">
-                                        Download
-                                    </a>
-                                    <button data-modal-toggle="edit-modal" 
-                                            task="edit"
-                                            edit-type="file" 
-                                            edit-target-id="<%= file.id %>"  
-                                            current-name="<%= file.name %>" 
-                                            class="text-sm text-gray-600 hover:text-gray-900">
-                                        Edit
-                                    </button>
-                                    <form method="POST" action="/library/file/<%= file.id %>/delete">
-                                        <button type="submit" class="text-sm text-red-600 hover:text-red-800">
-                                            Delete
+                            <td class="px-4 py-2 relative">
+                                <div class="relative inline-block text-left">
+                                    <div>
+                                        <button type="button"
+                                            class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                            id="menu-button-<%= file.id %>" aria-expanded="true" aria-haspopup="true">
+                                            Options
+                                            <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                                aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
                                         </button>
-                                    </form>
+                                    </div>
+
+                                    <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                        role="menu" aria-orientation="vertical" aria-labelledby="menu-button-<%= file.id %>"
+                                        tabindex="-1">
+                                        <div class="py-1" role="none">
+                                            <a href="/library/file/<%= file.id %>/download"
+                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem" tabindex="-1" id="menu-item-<%= file.id %>-download">
+                                                Download
+                                            </a>
+                                            <button data-modal-toggle="edit-modal" task="edit" edit-type="file"
+                                                edit-target-id="<%= file.id %>" current-name="<%= file.name %>"
+                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem" tabindex="-1" id="menu-item-<%= file.id %>-edit">
+                                                Edit
+                                            </button>
+                                            <form method="POST" action="/library/file/<%= file.id %>/delete" role="none">
+                                                <button type="submit"
+                                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    role="menuitem" tabindex="-1"
+                                                    id="menu-item-<%= file.id %>-delete">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -128,8 +149,8 @@
                 <% }; %>
             </tbody>
         </table>
-        
     </div>
+    <%- include('partials/footer.ejs') %>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
@@ -172,9 +193,16 @@
                     modal.close();
                 };
             });
+
+            // Dropdown toggle logic
+            document.querySelectorAll('[id^="menu-button"]').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    const menu = button.nextElementSibling;
+                    menu.classList.toggle('hidden');
+                });
+            });
         });
-
-
     </script>
 </body>
 </html>
