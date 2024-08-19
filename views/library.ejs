@@ -61,8 +61,8 @@
                         </td>
                         <td class="px-4 py-2">Folder</td>
                         <td class="px-4 py-2">-</td>
-                        <td class="px-4 py-2"><%= subfolder.createdAt.toDateString() %></td>
-                        <td class="px-4 py-2"><%= subfolder.updatedAt.toDateString() %></td>
+                        <td class="px-4 py-2" datetime="<%= subfolder.createdAt %>"></td>
+                        <td class="px-4 py-2" datetime="<%= subfolder.updatedAt %>"></td>
                         <td class="px-4 py-2">
                             <div class="flex gap-2 items-center">
                                 <button data-modal-toggle="edit-modal" 
@@ -89,8 +89,8 @@
                         </td>
                         <td class="px-4 py-2">File</td>
                         <td class="px-4 py-2"><%= file.size %> bytes</td>
-                        <td class="px-4 py-2"><%= file.createdAt.toDateString() %></td>
-                        <td class="px-4 py-2"><%= file.updatedAt.toDateString() %></td>
+                        <td class="px-4 py-2" datetime="<%= file.createdAt %>"></td>
+                        <td class="px-4 py-2" datetime="<%= file.updatedAt %>"></td>
                         <td class="px-4 py-2">
                             <div class="flex gap-2 items-center">
                                 <a href="/library/file/<%=file.id%>/download" class="text-sm text-blue-600 hover:text-blue-800">
@@ -158,6 +158,12 @@
                     const modal = document.getElementById(modalId);
                     modal.close();
                 };
+            });
+
+            // Format the dates
+            document.querySelectorAll('td[datetime]').forEach(td => {
+                const date = new Date(td.getAttribute('datetime'));
+                td.textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
             });
         });
 

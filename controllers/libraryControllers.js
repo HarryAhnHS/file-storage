@@ -1,7 +1,10 @@
 const db = require('../db/queries');
 const cloudinary = require('../utils/cloudinary.config');
 
-const axios = require('axios')
+const fs = require('fs');
+const path = require('path');
+
+const axios = require('axios');
 
 module.exports = {
     redirectToRoot: async (req, res) => {
@@ -43,10 +46,14 @@ module.exports = {
     
             // Add file to database
             await db.addFile(originalname, result.secure_url, size, folderId);
+
+            // Clear temporary local download
+            fs.unlinkSync(path.join(__dirname, path));
     
             // Redirect back to the referring page
             const redirectUrl = req.get('Referer') || `/`;
             res.redirect(redirectUrl);
+            
         } catch (error) {
             console.error('Upload failed:', error);
             throw error;
