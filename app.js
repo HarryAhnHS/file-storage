@@ -11,6 +11,9 @@ const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
 
 const indexRouter = require('./routers/indexRouter');
+const libraryRouter = require("./routers/libraryRouter");
+
+const auth = require('./utils/auth');
 
 const app = express();
 app.set("views", path.join(__dirname, "/views"));
@@ -49,7 +52,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", isAuth, indexRouter);
+app.use("/", indexRouter);
+app.use("/library", auth.isAuth, libraryRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

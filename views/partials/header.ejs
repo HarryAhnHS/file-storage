@@ -1,0 +1,24 @@
+<div class="header">
+    <a href="/">
+        <div class="header-logo">
+            File<span style="font-weight: 600;">Storage</span>
+        </div>
+    </a>
+
+    <% if (!locals.currentUser) { %>
+        <div class="logged-out-header">
+            <a href="/log-in">Log in</a>
+            <a href="/sign-up">Sign up</a>
+        </div>
+    <% } else { %>
+        <div class="logged-in-header">
+            <div class="logged-in-greeting">
+                Hi @<%= locals.currentUser.username %>!
+            </div>
+            <div>
+                <a class="library" href="/library">Library</a>
+                <a class="log-out" href="/log-out">Log Out</a>
+            </div>
+        </div>
+    <% } %>
+</div>
