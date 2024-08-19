@@ -22,10 +22,10 @@
                 <% }; %>
             </div>
             <div class="flex gap-6">
-                <form action="/folder/<%= folder.id %>" method="POST">
+                <form action="/library/<%= folder.id %>/add-subfolder" method="POST">
                     <button type="submit">New Folder</button>
                 </form>
-                <form action="/folder/<%= folder.id %>/upload" method="POST">
+                <form action="/library/<%= folder.id %>/upload" method="POST">
                     <button type="submit">Upload File</button>
                 </form>
             </div>

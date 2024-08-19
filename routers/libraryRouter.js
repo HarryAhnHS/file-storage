@@ -6,4 +6,6 @@ libraryRouter.get('/', libraryControllers.redirectToRoot);
 
 libraryRouter.get('/:folderId', libraryControllers.renderFolder);
 
+libraryRouter.post('/:folderId/add-subfolder', libraryControllers.createSubfolder);
+
 module.exports = libraryRouter;

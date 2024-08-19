@@ -65,11 +65,12 @@ module.exports = {
             throw error;
         }
     },
-    getFolderById: async (folderId) => {
+    getFolder: async (userId, folderId) => {
         try {
             const folder = await prisma.folder.findFirst({
                 where: {
-                  folderId: folderId,      // Replace userId with the actual user's ID
+                    id: folderId,
+                    userId: userId,
                 },
                 include: {
                   subfolders: true,
@@ -80,6 +81,23 @@ module.exports = {
         }
         catch(error) {
             console.error('Error getting folder', error);
+            throw error;
+        }
+    },
+    addSubfolder: async (userId, parentId) => {
+        try {
+            console.log('help',userId, parentId)
+            const newSubfolder = await prisma.folder.create({
+                data: {
+                    name: "New Folder",   // Name of the new subfolder
+                    userId: userId,           // User ID to associate with the new subfolder
+                    parentId: parentId  // Set parentId to link to the parent folder
+                }
+            });
+            return newSubfolder;
+        }
+        catch(error) {
+            console.error('Error creating subfolder', error);
             throw error;
         }
     }
