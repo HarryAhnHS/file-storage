@@ -86,7 +86,6 @@ module.exports = {
     },
     addSubfolder: async (userId, parentId) => {
         try {
-            console.log('help',userId, parentId)
             const newSubfolder = await prisma.folder.create({
                 data: {
                     name: "New Folder",   // Name of the new subfolder
@@ -98,6 +97,51 @@ module.exports = {
         }
         catch(error) {
             console.error('Error creating subfolder', error);
+            throw error;
+        }
+    },
+    renameEntry: async(type, id, newName) => {
+        try {
+            const query = {
+                where: {
+                    id: id
+                },
+                data: {
+                    name: newName,
+                }
+            };
+            if (type === 'folder') {
+                const updatedFolder = await prisma.folder.update(query);
+                return updatedFolder;
+            }
+            else if (type === 'file') {
+                const updatedFile = await prisma.file.update(query);
+                return updatedFile;
+            }
+        }
+        catch(error) {
+            console.error('Error renaming', error);
+            throw error;
+        }
+    },
+    deleteEntry: async(type, id) => {
+        try {
+            const query = {
+                where: {
+                    id: id
+                }
+            };
+            if (type === 'folder') {
+                const deleteFolder = await prisma.folder.delete(query);
+                return deleteFolder;
+            }
+            else if (type === 'file') {
+                const deleteFile = await prisma.file.delete(query);
+                return deleteFile;
+            }
+        }
+        catch(error) {
+            console.error('Error renaming', error);
             throw error;
         }
     }
