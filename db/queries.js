@@ -30,7 +30,12 @@ module.exports = {
             const user = await prisma.user.create({
                 data: {
                     username: username,
-                    password: hashedPassword
+                    password: hashedPassword,
+                    folders: {
+                        create: {
+                            name: `@${username}'s Library`,
+                        }
+                    }
                 }
             })
 
@@ -38,6 +43,43 @@ module.exports = {
         }
         catch(error) {
             console.error('Error adding user', error);
+            throw error;
+        }
+    },
+    getRootFolder: async (userId) => {
+        try {
+            const user = await prisma.folder.findFirst({
+                where: {
+                  userId: userId,
+                  parentId: null
+                },
+                include: {
+                  subfolders: true,
+                  files: true
+                }
+            });
+            return user;
+        }
+        catch(error) {
+            console.error('Error getting root', error);
+            throw error;
+        }
+    },
+    getFolderById: async (folderId) => {
+        try {
+            const folder = await prisma.folder.findFirst({
+                where: {
+                  folderId: folderId,      // Replace userId with the actual user's ID
+                },
+                include: {
+                  subfolders: true,
+                  files: true
+                }
+            });
+            return folder;
+        }
+        catch(error) {
+            console.error('Error getting folder', error);
             throw error;
         }
     }

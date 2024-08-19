@@ -9,14 +9,60 @@
     <!-- Tailwind CSS -->
     <link href="/styles/tailwind-built.css" rel="stylesheet">
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
     <%- include('./partials/header.ejs') %>
 
-    <div class="content">
-        <div class="library-nav">
-
-
+    <div class="content flex-1 p-3">
+        <h1>Contents of <%= folder.name %></h1>
+        <div class="top-bar flex justify-between">
+            <div class="navigation flex">
+                <a href="/library" class="back-link">← Back to Root</a>
+                <% if (folder.parent) { %>
+                    <a href="/library/<%= folder.parent.id %>" class="back-link">← Back to <%= folder.parent.name %></a>
+                <% }; %>
+            </div>
+            <div class="flex gap-6">
+                <form action="/folder/<%= folder.id %>" method="POST">
+                    <button type="submit">New Folder</button>
+                </form>
+                <form action="/folder/<%= folder.id %>/upload" method="POST">
+                    <button type="submit">Upload File</button>
+                </form>
+            </div>
+            
         </div>
+        
+        <table class="w-full border border-blue-500">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% folder.subfolders.forEach(subfolder => { %>
+                    <tr class="folder">
+                        <td><a href="/library/<%= subfolder.id %>"><%= subfolder.name %></a></td>
+                        <td>Folder</td>
+                        <td>-</td>
+                        <td><%= subfolder.createdAt.toDateString() %></td>
+                        <td><%= subfolder.updatedAt.toDateString() %></td>
+                    </tr>
+                <% }) %>
+                <% folder.files.forEach(file => { %>
+                    <tr class="file">
+                        <td><%= file.name %></td>
+                        <td>File</td>
+                        <td><%= file.size %> bytes</td>
+                        <td><%= file.createdAt.toDateString() %></td>
+                        <td><%= file.updatedAt.toDateString() %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
