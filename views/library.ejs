@@ -74,21 +74,39 @@
                             <td class="px-4 py-2">-</td>
                             <td class="px-4 py-2"><%= subfolder.formattedCreatedAt %></td>
                             <td class="px-4 py-2"><%= subfolder.formattedUpdatedAt %></td>
-                            <td class="px-4 py-2">
-                                <div class="flex gap-2 items-center">
-                                    <button data-modal-toggle="edit-modal" 
-                                            task="edit"
-                                            edit-type="folder" 
-                                            edit-target-id="<%= subfolder.id %>" 
-                                            current-name="<%= subfolder.name %>" 
-                                            class="text-sm text-gray-600 hover:text-gray-900">
-                                        Edit
+                            <td class="px-4 py-2 relative">
+                                <div class="relative inline-block text-left">
+                                    <button type="button"
+                                        class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                        id="menu-button-<%= subfolder.id %>" aria-expanded="true" aria-haspopup="true">
+                                        Options
+                                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                            aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                                clip-rule="evenodd" />
+                                        </svg>
                                     </button>
-                                    <form method="POST" action="/library/folder/<%= subfolder.id %>/delete">
-                                        <button type="submit" class="text-sm text-red-600 hover:text-red-800">
-                                            Delete
-                                        </button>
-                                    </form>
+
+                                    <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                        role="menu" aria-orientation="vertical" aria-labelledby="menu-button-<%= subfolder.id %>"
+                                        tabindex="-1">
+                                        <div class="py-1" role="none">
+                                            <button data-modal-toggle="edit-modal" task="edit" edit-type="folder"
+                                                edit-target-id="<%= subfolder.id %>" current-name="<%= subfolder.name %>"
+                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                role="menuitem" tabindex="-1" id="menu-item-<%= subfolder.id %>-edit">
+                                                Edit
+                                            </button>
+                                            <form method="POST" action="/library/folder/<%= subfolder.id %>/delete"
+                                                role="none">
+                                                <button type="submit"
+                                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    role="menuitem" tabindex="-1"
+                                                    id="menu-item-<%= subfolder.id %>-delete">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -105,19 +123,17 @@
                             <td class="px-4 py-2"><%= file.formattedUpdatedAt %></td>
                             <td class="px-4 py-2 relative">
                                 <div class="relative inline-block text-left">
-                                    <div>
-                                        <button type="button"
-                                            class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                            id="menu-button-<%= file.id %>" aria-expanded="true" aria-haspopup="true">
-                                            Options
-                                            <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
-                                                aria-hidden="true">
-                                                <path fill-rule="evenodd"
-                                                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                                    <button type="button"
+                                        class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                        id="menu-button-<%= file.id %>" aria-expanded="true" aria-haspopup="true">
+                                        Options
+                                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                            aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
 
                                     <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                         role="menu" aria-orientation="vertical" aria-labelledby="menu-button-<%= file.id %>"
@@ -153,56 +169,88 @@
     <%- include('partials/footer.ejs') %>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
+            // Dropdown toggle logic
+            document.querySelectorAll('[id^="menu-button"]').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    // Prevent this click event from closing the dropdown itself
+                    event.stopPropagation();
 
+                    // Close all other open dropdowns
+                    document.querySelectorAll('[id^="menu-button"]').forEach(btn => {
+                        const menu = btn.nextElementSibling;
+                        if (menu && !menu.classList.contains('hidden') && menu !== button.nextElementSibling) {
+                            menu.classList.add('hidden');
+                        }
+                    });
+
+                    // Toggle the clicked dropdown
+                    const menu = button.nextElementSibling;
+                    if (menu) {
+                        menu.classList.toggle('hidden');
+                    }
+                });
+            });
+
+            // Stop the dropdown menuitems click event from propagating to parent elements
+            document.querySelectorAll('[role="menuitem"]').forEach(item => {
+                item.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    // Close the parent dropdown
+                    const menu = item.closest('[role="menu"]');
+                    if (menu) {
+                        menu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Close dropdowns on clicking outside
+            document.addEventListener('click', function(event) {
+                document.querySelectorAll('[id^="menu-button"]').forEach(button => {
+                    const menu = button.nextElementSibling;
+                    if (menu && !menu.classList.contains('hidden') && !button.contains(event.target)) {
+                        menu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Handle modal toggles
+            const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
             toggleButtons.forEach(button => {
-                button.onclick = () => {
+                button.addEventListener('click', () => {
                     const modalId = button.getAttribute('data-modal-toggle');
                     const modalTask = button.getAttribute('task');
-
                     const modal = document.getElementById(modalId);
 
-                    // Update modal respectively
-                    if (modalTask == 'edit') {
+                    if (modalTask === 'edit') {
                         const editType = button.getAttribute('edit-type');
                         const editId = button.getAttribute('edit-target-id');
                         const currentName = button.getAttribute('current-name');
 
                         const form = modal.querySelector('form');
                         const name = modal.querySelector('input[type="text"]');
-                        // Update the form action with the correct ID
                         form.action = `/library/${editType}/${editId}/rename`;
                         name.value = currentName;
                     }
-                    if (modalTask == 'upload') {
+                    if (modalTask === 'upload') {
                         const parent = button.getAttribute('parent-name');
                         const parentElement = modal.querySelector('#upload-parent');
                         parentElement.textContent = parent;
                     }
-                    
+
                     modal.showModal();
-                };
+                });
             });
 
-            const closeButtons = document.querySelectorAll('[data-modal-close]');
-
-            closeButtons.forEach(button => {
-                button.onclick = () => {
+            // Handle modal close
+            document.querySelectorAll('[data-modal-close]').forEach(button => {
+                button.addEventListener('click', () => {
                     const modalId = button.getAttribute('data-modal-close');
                     const modal = document.getElementById(modalId);
                     modal.close();
-                };
-            });
-
-            // Dropdown toggle logic
-            document.querySelectorAll('[id^="menu-button"]').forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                    const menu = button.nextElementSibling;
-                    menu.classList.toggle('hidden');
                 });
             });
         });
+
     </script>
 </body>
 </html>
