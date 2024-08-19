@@ -14,11 +14,14 @@
 <body class="flex flex-col min-h-screen">
     <%- include('./partials/header.ejs') %>
 
-    <div class="content flex-1 p-3 bg-gray-100">
-        <div class="flex h-[20px] items-center">
+    <div class="content flex-1 px-6 py-4 bg-gray-100">
+        <div class="flex items-center">
             <% if (folder.parentId) { %>
-                <a href="/library/<%= folder.parent.id %>" class="back-link">← <%= folder.parent.name %></a>
-            <% }; %>
+                <a href="/library/<%= folder.parent.id %>" 
+                   class="py-3 px-1 text-blue-600 hover:text-blue-800 font-medium flex items-center space-x-2">
+                    <span class="text-base">← <%= folder.parent.name %></span>
+                </a>
+            <% } %>
         </div>
         <div class="flex justify-between items-center">
             <div class="flex">
@@ -43,76 +46,86 @@
         </div>
         
         <table class="w-full rounded-lg border border-gray-300 my-3 bg-white shadow-md">
-            <thead class="bg-gray-200 text-gray-700">
+            <thead class="bg-gray-200 text-black text-sm">
                 <tr class="text-left border-b">
-                    <th class="px-4 py-2">Name</th>
-                    <th class="px-4 py-2">Type</th>
-                    <th class="px-4 py-2">Size</th>
-                    <th class="px-4 py-2">Created At</th>
-                    <th class="px-4 py-2">Updated At</th>
-                    <th class="px-4 py-2">Options</th>
+                    <th class="px-4 py-2 font-normal">Name</th>
+                    <th class="px-4 py-2 font-normal">Type</th>
+                    <th class="px-4 py-2 font-normal">Size</th>
+                    <th class="px-4 py-2 font-normal">Created</th>
+                    <th class="px-4 py-2 font-normal">Updated</th>
+                    <th class="px-4 py-2 font-normal">Options</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
-                <% folder.subfolders.forEach(subfolder => { %>
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-4 py-2">
-                            <a href="/library/<%= subfolder.id %>" class="text-blue-600 hover:underline"><%= subfolder.name %></a>
-                        </td>
-                        <td class="px-4 py-2">Folder</td>
-                        <td class="px-4 py-2">-</td>
-                        <td class="px-4 py-2" datetime="<%= subfolder.createdAt %>"></td>
-                        <td class="px-4 py-2" datetime="<%= subfolder.updatedAt %>"></td>
-                        <td class="px-4 py-2">
-                            <div class="flex gap-2 items-center">
-                                <button data-modal-toggle="edit-modal" 
-                                        task="edit"
-                                        edit-type="folder" 
-                                        edit-target-id="<%= subfolder.id %>" 
-                                        current-name="<%= subfolder.name %>" 
-                                        class="text-sm text-gray-600 hover:text-gray-900">
-                                    Edit
-                                </button>
-                                <form method="POST" action="/library/folder/<%= subfolder.id %>/delete">
-                                    <button type="submit" class="text-sm text-red-600 hover:text-red-800">
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
+            <tbody class="divide-y divide-gray-200 text-sm">
+                <% if ((folder.subfolders.length === 0 || !folder.subfolders) && (folder.files.length === 0 || !folder.files)) { %>
+                    <tr class="bg-gray-50">
+                        <td colspan="6" class="text-center py-4 text-gray-500 text-base">
+                            This folder is empty.
                         </td>
                     </tr>
-                <% }) %>
-                <% folder.files.forEach(file => { %>
-                    <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-4 py-2">
-                            <a href="/library/file/<%= file.id %>" class="text-blue-600 hover:underline"><%= file.name %></a>
-                        </td>
-                        <td class="px-4 py-2">File</td>
-                        <td class="px-4 py-2"><%= file.size %> bytes</td>
-                        <td class="px-4 py-2" datetime="<%= file.createdAt %>"></td>
-                        <td class="px-4 py-2" datetime="<%= file.updatedAt %>"></td>
-                        <td class="px-4 py-2">
-                            <div class="flex gap-2 items-center">
-                                <a href="/library/file/<%=file.id%>/download" class="text-sm text-blue-600 hover:text-blue-800">
-                                    Download
-                                </a>
-                                <button data-modal-toggle="edit-modal" 
-                                        task="edit"
-                                        edit-type="file" 
-                                        edit-target-id="<%= file.id %>"  
-                                        current-name="<%= file.name %>" 
-                                        class="text-sm text-gray-600 hover:text-gray-900">
-                                    Edit
-                                </button>
-                                <form method="POST" action="/library/file/<%= file.id %>/delete">
-                                    <button type="submit" class="text-sm text-red-600 hover:text-red-800">
-                                        Delete
+                <% } else { %>
+                    <% folder.subfolders.forEach(subfolder => { %>
+                        <tr class="hover:bg-gray-50 cursor-pointer transition-colors"
+                            onclick="window.location.href='/library/<%= subfolder.id %>'">
+                            <td class="px-4 py-2 text-blue-600 hover:underline">
+                                <%= subfolder.name %>
+                            </td>
+                            <td class="px-4 py-2">Folder</td>
+                            <td class="px-4 py-2">-</td>
+                            <td class="px-4 py-2"><%= subfolder.formattedCreatedAt %></td>
+                            <td class="px-4 py-2"><%= subfolder.formattedUpdatedAt %></td>
+                            <td class="px-4 py-2">
+                                <div class="flex gap-2 items-center">
+                                    <button data-modal-toggle="edit-modal" 
+                                            task="edit"
+                                            edit-type="folder" 
+                                            edit-target-id="<%= subfolder.id %>" 
+                                            current-name="<%= subfolder.name %>" 
+                                            class="text-sm text-gray-600 hover:text-gray-900">
+                                        Edit
                                     </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                <% }) %>
+                                    <form method="POST" action="/library/folder/<%= subfolder.id %>/delete">
+                                        <button type="submit" class="text-sm text-red-600 hover:text-red-800">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                    <% folder.files.forEach(file => { %>
+                        <tr class="hover:bg-gray-50 transition-colors cursor-pointer"
+                            onclick="window.location.href='/library/file/<%= file.id %>'">
+                            <td class="px-4 py-2 text-blue-600 hover:underline">
+                                <%= file.name %>
+                            </td>
+                            <td class="px-4 py-2">File</td>
+                            <td class="px-4 py-2"><%= file.formattedSize %></td>
+                            <td class="px-4 py-2"><%= file.formattedCreatedAt %></td>
+                            <td class="px-4 py-2"><%= file.formattedUpdatedAt %></td>
+                            <td class="px-4 py-2">
+                                <div class="flex gap-2 items-center">
+                                    <a href="/library/file/<%=file.id%>/download" class="text-sm text-blue-600 hover:text-blue-800">
+                                        Download
+                                    </a>
+                                    <button data-modal-toggle="edit-modal" 
+                                            task="edit"
+                                            edit-type="file" 
+                                            edit-target-id="<%= file.id %>"  
+                                            current-name="<%= file.name %>" 
+                                            class="text-sm text-gray-600 hover:text-gray-900">
+                                        Edit
+                                    </button>
+                                    <form method="POST" action="/library/file/<%= file.id %>/delete">
+                                        <button type="submit" class="text-sm text-red-600 hover:text-red-800">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% }; %>
             </tbody>
         </table>
         
@@ -158,12 +171,6 @@
                     const modal = document.getElementById(modalId);
                     modal.close();
                 };
-            });
-
-            // Format the dates
-            document.querySelectorAll('td[datetime]').forEach(td => {
-                const date = new Date(td.getAttribute('datetime'));
-                td.textContent = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
             });
         });
 

@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const axios = require('axios');
+const formatters = require('../utils/formatters');
 
 module.exports = {
     redirectToRoot: async (req, res) => {
@@ -15,9 +16,30 @@ module.exports = {
         const userId = req.user.id;
         const folderId = req.params.folderId;
         const folder = await db.getFolder(userId, folderId);
-        console.log("Rendering with folder:", folder);
+
+        // Format data
+        const formattedFolder = {
+            ...folder,
+
+            formattedCreatedAt: formatters.formatDate(folder.createdAt),
+            formattedUpdatedAt: formatters.formatDate(folder.updatedAt),
+
+            subfolders: folder.subfolders.map(subfolder => ({
+                ...subfolder,
+                formattedCreatedAt: formatters.formatDate(subfolder.createdAt),
+                formattedUpdatedAt: formatters.formatDate(subfolder.updatedAt),
+            })),
+
+            files: folder.files.map(file => ({
+                ...file,
+                formattedSize: formatters.formatBytes(file.size),
+                formattedCreatedAt: formatters.formatDate(file.createdAt),
+                formattedUpdatedAt: formatters.formatDate(file.updatedAt),
+            }))
+        };
+
         res.render('library', {
-            folder: folder
+            folder: formattedFolder
         })
     },
     createSubfolder: async (req, res) => {
@@ -64,7 +86,10 @@ module.exports = {
         const file = await db.getFile(fileId);
 
         res.render('file', {
-            file: file
+            file: {
+                ...file,
+                formattedSize: formatters.formatBytes(file.size),
+            }
         });
     },
     downloadFile: async (req, res) => {
