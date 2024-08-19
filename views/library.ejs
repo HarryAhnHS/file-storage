@@ -24,22 +24,34 @@
             <% } %>
         </div>
         <div class="flex justify-between items-center">
-            <div class="flex">
-                <h1 class="text-xl font-bold py-3"><%= folder.name %></h1>
+            <div class="flex items-center gap-3 ml-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+                </svg>                  
+                <h1 class="text-xl font-bold">                     
+                    <%= folder.name %>
+                </h1>
             </div>
             
-            <div class="flex gap-6 text-sm">
+            <div class="flex text-sm">
                 <form action="/library/<%= folder.id %>/add-subfolder" method="POST">
                     <button type="submit" 
-                            class="px-4 py-2 text-blue-600 border-blue-600 border-2">
-                        + New Folder
+                            class="flex items-center px-4 py-2 text-blue-600 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                        </svg> 
+                        New Folder
                     </button>
                 </form>
                 <button data-modal-toggle="upload-modal" 
                         task="upload"
                         parent-name="<%= folder.name %>" 
-                        class="px-4 py-2 text-blue-600 border-blue-600 border-2">
-                    + Upload
+                        class="flex items-center px-4 py-2 text-blue-600 hover:underline">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                    </svg>
+                          
+                    Upload file
                 </button>
             </div>
             
@@ -48,12 +60,11 @@
         <table class="w-full rounded-lg border border-gray-300 my-3 bg-white shadow-md">
             <thead class="bg-gray-200 text-black text-sm">
                 <tr class="text-left border-b">
-                    <th class="px-4 py-2 font-normal">Name</th>
-                    <th class="px-4 py-2 font-normal">Type</th>
-                    <th class="px-4 py-2 font-normal">Size</th>
-                    <th class="px-4 py-2 font-normal">Created</th>
-                    <th class="px-4 py-2 font-normal">Updated</th>
-                    <th class="px-4 py-2 font-normal">Options</th>
+                    <th class="px-4 py-2 font-normal" style="width: 40%;">Name</th>
+                    <th class="px-4 py-2 font-normal" style="width: 10%;">Size</th>
+                    <th class="px-4 py-2 font-normal" style="width: 20%;">Created</th>
+                    <th class="px-4 py-2 font-normal" style="width: 20%;">Last Updated</th>
+                    <th class="px-4 py-2 font-normal" style="width: 10%;">Options</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 text-sm">
@@ -68,24 +79,25 @@
                         <tr class="hover:bg-gray-50 cursor-pointer transition-colors"
                             onclick="window.location.href='/library/<%= subfolder.id %>'">
                             <td class="px-4 py-2 text-blue-600 hover:underline">
-                                <%= subfolder.name %>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                                    </svg>
+                                    <%= subfolder.name %>
+                                </div>
                             </td>
-                            <td class="px-4 py-2">Folder</td>
                             <td class="px-4 py-2">-</td>
                             <td class="px-4 py-2"><%= subfolder.formattedCreatedAt %></td>
                             <td class="px-4 py-2"><%= subfolder.formattedUpdatedAt %></td>
                             <td class="px-4 py-2 relative">
-                                <div class="relative inline-block text-left">
+                                <div class="relative flex">
                                     <button type="button"
-                                        class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                        class="w-full justify-center rounded-md px-3 py-2 hover:text-blue-600"
                                         id="menu-button-<%= subfolder.id %>" aria-expanded="true" aria-haspopup="true">
-                                        Options
-                                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
-                                            aria-hidden="true">
-                                            <path fill-rule="evenodd"
-                                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                                clip-rule="evenodd" />
-                                        </svg>
+                                            <!-- Ellipsis -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                            </svg>                                          
                                     </button>
 
                                     <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -94,16 +106,24 @@
                                         <div class="py-1" role="none">
                                             <button data-modal-toggle="edit-modal" task="edit" edit-type="folder"
                                                 edit-target-id="<%= subfolder.id %>" current-name="<%= subfolder.name %>"
-                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                 role="menuitem" tabindex="-1" id="menu-item-<%= subfolder.id %>-edit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                </svg>    
                                                 Edit
                                             </button>
                                             <form method="POST" action="/library/folder/<%= subfolder.id %>/delete"
                                                 role="none">
                                                 <button type="submit"
-                                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                     role="menuitem" tabindex="-1"
-                                                    id="menu-item-<%= subfolder.id %>-delete">Delete</button>
+                                                    id="menu-item-<%= subfolder.id %>-delete">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                                                    </svg>
+                                                    Delete
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
@@ -115,24 +135,25 @@
                         <tr class="hover:bg-gray-50 transition-colors cursor-pointer"
                             onclick="window.location.href='/library/file/<%= file.id %>'">
                             <td class="px-4 py-2 text-blue-600 hover:underline">
-                                <%= file.name %>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                                    </svg>
+                                    <%= file.name %>
+                                </div>
                             </td>
-                            <td class="px-4 py-2">File</td>
                             <td class="px-4 py-2"><%= file.formattedSize %></td>
                             <td class="px-4 py-2"><%= file.formattedCreatedAt %></td>
                             <td class="px-4 py-2"><%= file.formattedUpdatedAt %></td>
                             <td class="px-4 py-2 relative">
-                                <div class="relative inline-block text-left">
+                                <div class="relative flex">
                                     <button type="button"
-                                        class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                        class="w-full justify-center rounded-md px-3 py-2 hover:text-blue-600"
                                         id="menu-button-<%= file.id %>" aria-expanded="true" aria-haspopup="true">
-                                        Options
-                                        <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
-                                            aria-hidden="true">
-                                            <path fill-rule="evenodd"
-                                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                                clip-rule="evenodd" />
-                                        </svg>
+                                            <!-- Ellipsis -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                            </svg>                                          
                                     </button>
 
                                     <div class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
@@ -140,21 +161,32 @@
                                         tabindex="-1">
                                         <div class="py-1" role="none">
                                             <a href="/library/file/<%= file.id %>/download"
-                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                 role="menuitem" tabindex="-1" id="menu-item-<%= file.id %>-download">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                                </svg>                                                  
                                                 Download
                                             </a>
                                             <button data-modal-toggle="edit-modal" task="edit" edit-type="file"
                                                 edit-target-id="<%= file.id %>" current-name="<%= file.name %>"
-                                                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                 role="menuitem" tabindex="-1" id="menu-item-<%= file.id %>-edit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                </svg>                                                  
                                                 Edit
                                             </button>
                                             <form method="POST" action="/library/file/<%= file.id %>/delete" role="none">
                                                 <button type="submit"
-                                                    class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                                     role="menuitem" tabindex="-1"
-                                                    id="menu-item-<%= file.id %>-delete">Delete</button>
+                                                    id="menu-item-<%= file.id %>-delete">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75 14.25 12m0 0 2.25 2.25M14.25 12l2.25-2.25M14.25 12 12 14.25m-2.58 4.92-6.374-6.375a1.125 1.125 0 0 1 0-1.59L9.42 4.83c.21-.211.497-.33.795-.33H19.5a2.25 2.25 0 0 1 2.25 2.25v10.5a2.25 2.25 0 0 1-2.25 2.25h-9.284c-.298 0-.585-.119-.795-.33Z" />
+                                                    </svg>
+                                                    Delete
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
