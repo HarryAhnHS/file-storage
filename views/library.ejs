@@ -9,6 +9,7 @@
     <!-- Tailwind CSS -->
     <link href="/styles/tailwind-built.css" rel="stylesheet">
 </head>
+<%- include('./modals/update-form.ejs') %>
 <body class="flex flex-col min-h-screen">
     <%- include('./partials/header.ejs') %>
 
@@ -32,7 +33,7 @@
             
         </div>
         
-        <table class="w-full border border-blue-500">
+        <table class="w-full border border-blue-500 my-3">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -40,6 +41,7 @@
                     <th>Size</th>
                     <th>Created At</th>
                     <th>Updated At</th>
+                    <th>Options</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,6 +52,19 @@
                         <td>-</td>
                         <td><%= subfolder.createdAt.toDateString() %></td>
                         <td><%= subfolder.updatedAt.toDateString() %></td>
+                        <td>
+                            <button data-modal-toggle="edit-modal" 
+                                    edit-type="folder" 
+                                    edit-target-id="<%= subfolder.id %>"  
+                                    class="block px-4 py-2 text-sm text-gray-700">
+                                Edit
+                            </a>
+                            <form method="POST" action="/library/folder/<%= subfolder.id %>/delete">
+                                <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 <% }) %>
                 <% folder.files.forEach(file => { %>
@@ -64,5 +79,38 @@
             </tbody>
         </table>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
+
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modalId = button.getAttribute('data-modal-toggle');
+                    const editType = button.getAttribute('edit-type')
+                    const editId = button.getAttribute('edit-target-id')
+
+                    const modal = document.getElementById(modalId);
+                    const form = modal.querySelector('form');
+                    // Update the form action with the correct ID
+                    form.action = `/library/${editType}/${editId}/rename`;
+                    
+                    console.log(modal);
+                    modal.showModal();
+                });
+            });
+
+            const closeButtons = document.querySelectorAll('[data-modal-close]');
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modalId = button.getAttribute('data-modal-close');
+                    const modal = document.getElementById(modalId);
+                    modal.close();
+                });
+            });
+        });
+
+
+    </script>
 </body>
 </html>
