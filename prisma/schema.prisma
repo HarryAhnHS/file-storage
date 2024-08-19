@@ -45,8 +45,8 @@ model File {
   name        String
   path        String
   size        Int
-  folder      Folder      @relation(fields: [folderId], references: [id])
-  folderId    String      @unique
+  folder      Folder?     @relation(fields: [folderId], references: [id])
+  folderId    String?     @unique
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 }

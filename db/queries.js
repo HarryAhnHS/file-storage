@@ -33,7 +33,7 @@ module.exports = {
                     password: hashedPassword,
                     folders: {
                         create: {
-                            name: `@${username}'s Library`,
+                            name: `My Library`,
                         }
                     }
                 }

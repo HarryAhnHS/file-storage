@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Storage</title>
-    <!-- Custom Styles -->
-    <!-- <link rel="stylesheet" href="/styles/styles.css"> -->
     <!-- Tailwind CSS -->
     <link href="/styles/tailwind-built.css" rel="stylesheet">
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-gray-100">
     <%- include('./partials/header.ejs') %>
-    <div class="content flex-1 p-3">
-        Welcome to File Storage!
+
+    <!-- Hero Section -->
+    <div class="flex flex-1 items-center justify-center bg-blue-600 text-white py-20 px-6">
+        <div class="text-center max-w-2xl">
+            <h1 class="text-4xl sm:text-5xl font-bold mb-6">Welcome to File Storage</h1>
+            <p class="text-lg sm:text-xl mb-8">Your secure, reliable, and easy-to-use online file storage solution. Start organizing and accessing your files from anywhere in the world.</p>
+            <a href="/library" class="inline-block bg-white text-blue-600 font-semibold py-3 px-6 rounded-lg shadow-lg hover:bg-blue-50 transition duration-300">Go to My Library</a>
+        </div>
+    </div>
+
+    <!-- Additional Content (optional) -->
+    <div class="flex-1 p-6 text-center">
+        <p class="text-gray-700 text-sm">Manage your files with ease and security. Whether you’re a professional or just need a place to store personal documents, File Storage has you covered.</p>
     </div>
 </body>
 </html>

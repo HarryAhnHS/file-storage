@@ -1,24 +1,23 @@
-<div class="flex flex-row justify-between py-4 px-3">
-    <a href="/">
-        <div class="text-2xl">
-            File<span style="font-weight: 600;">Storage</span>
-        </div>
-    </a>
+<div class="flex flex-col sm:flex-row justify-between items-center px-3 bg-slate-200 py-5 space-y-3 sm:space-y-0 sm:space-x-4">
+    <div class="text-3xl flex justify-center items-center">
+        <a href="/" class="flex items-center">
+            File<span class="font-semibold">Storage</span>
+        </a>
+    </div>
 
-    <% if (!locals.currentUser) { %>
-        <div class="logged-out-header">
-            <a href="/log-in">Log in</a>
-            <a href="/sign-up">Sign up</a>
-        </div>
-    <% } else { %>
-        <div class="logged-in-header">
-            <div class="logged-in-greeting">
-                Hi @<%= locals.currentUser.username %>!
+    <div class="flex items-center gap-3">
+        <% if (!locals.currentUser) { %>
+            <a href="/log-in" class="text-sm sm:text-base">Log in</a>
+            <a href="/sign-up" class="text-sm sm:text-base">Sign up</a>
+        <% } else { %>
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <div class="flex items-center space-x-2 gap-3">
+                    <span class="text-sm sm:text-base">Hi @<%= locals.currentUser.username %>!</span>
+                    <span class="border-l h-5 sm:h-6 border-gray-400"></span>
+                </div>
+                <a class="library text-sm sm:text-base" href="/library">Library</a>
+                <a class="log-out text-sm sm:text-base ml-3" href="/log-out">Log Out</a>
             </div>
-            <div>
-                <a class="library" href="/library">Library</a>
-                <a class="log-out" href="/log-out">Log Out</a>
-            </div>
-        </div>
-    <% } %>
+        <% } %>
+    </div>
 </div>

@@ -10,11 +10,12 @@
     <link href="/styles/tailwind-built.css" rel="stylesheet">
 </head>
 <%- include('./modals/update-form.ejs') %>
+<%- include('./modals/upload-file-form.ejs') %>
 <body class="flex flex-col min-h-screen">
     <%- include('./partials/header.ejs') %>
 
     <div class="content flex-1 p-3">
-        <h1>Contents of <%= folder.name %></h1>
+        <h1 class="text-xl font-bold"><%= folder.name %></h1>
         <div class="top-bar flex justify-between">
             <div class="navigation flex">
                 
@@ -28,10 +29,12 @@
                 <form action="/library/<%= folder.id %>/add-subfolder" method="POST">
                     <button type="submit">New Folder</button>
                 </form>
-                <form action="/library/<%= folder.id %>/upload" method="POST" enctype="multipart/form-data">
-                    <input type="file" name="uploaded_file" required/>
-                    <button type="submit">Upload File</button>
-                </form>
+                <button data-modal-toggle="upload-modal" 
+                        task="upload"
+                        parent-name="<%= folder.name %>" 
+                        class="block px-4 py-2 text-sm text-gray-700">
+                    Upload
+                </button>
             </div>
             
         </div>
@@ -57,8 +60,10 @@
                         <td><%= subfolder.updatedAt.toDateString() %></td>
                         <td>
                             <button data-modal-toggle="edit-modal" 
+                                    task="edit"
                                     edit-type="folder" 
-                                    edit-target-id="<%= subfolder.id %>"  
+                                    edit-target-id="<%= subfolder.id %>" 
+                                    current-name="<%= subfolder.name %>" 
                                     class="block px-4 py-2 text-sm text-gray-700">
                                 Edit
                             </button>
@@ -82,8 +87,10 @@
                                 <a href="/library/file/<%=file.id%>/download">Download</a>
                             </div>
                             <button data-modal-toggle="edit-modal" 
+                                    task="edit"
                                     edit-type="file" 
                                     edit-target-id="<%= file.id %>"  
+                                    current-name="<%= file.name %>" 
                                     class="block px-4 py-2 text-sm text-gray-700">
                                 Edit
                             </button>
@@ -103,28 +110,42 @@
             const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
 
             toggleButtons.forEach(button => {
-                button.addEventListener('click', () => {
+                button.onclick = () => {
                     const modalId = button.getAttribute('data-modal-toggle');
-                    const editType = button.getAttribute('edit-type')
-                    const editId = button.getAttribute('edit-target-id')
+                    const modalTask = button.getAttribute('task');
 
                     const modal = document.getElementById(modalId);
-                    const form = modal.querySelector('form');
-                    // Update the form action with the correct ID
-                    form.action = `/library/${editType}/${editId}/rename`;
-                
+
+                    // Update modal respectively
+                    if (modalTask == 'edit') {
+                        const editType = button.getAttribute('edit-type');
+                        const editId = button.getAttribute('edit-target-id');
+                        const currentName = button.getAttribute('current-name');
+
+                        const form = modal.querySelector('form');
+                        const name = modal.querySelector('input[type="text"]');
+                        // Update the form action with the correct ID
+                        form.action = `/library/${editType}/${editId}/rename`;
+                        name.value = currentName;
+                    }
+                    if (modalTask == 'upload') {
+                        const parent = button.getAttribute('parent-name');
+                        const parentElement = modal.querySelector('#upload-parent');
+                        parentElement.textContent = parent;
+                    }
+                    
                     modal.showModal();
-                });
+                };
             });
 
             const closeButtons = document.querySelectorAll('[data-modal-close]');
 
             closeButtons.forEach(button => {
-                button.addEventListener('click', () => {
+                button.onclick = () => {
                     const modalId = button.getAttribute('data-modal-close');
                     const modal = document.getElementById(modalId);
                     modal.close();
-                });
+                };
             });
         });
 
