@@ -4,3 +4,5 @@ _NPM Packages Installed_
 - prisma --save-dev
 - @quixo3/prisma-session-store
 - cloudinary, multer
+- axios
+- tailwindcss, postcss

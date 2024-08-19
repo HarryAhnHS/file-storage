@@ -12,6 +12,7 @@ module.exports = {
         const userId = req.user.id;
         const folderId = req.params.folderId;
         const folder = await db.getFolder(userId, folderId);
+        console.log("Rendering with folder:", folder);
         res.render('library', {
             folder: folder
         })

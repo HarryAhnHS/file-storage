@@ -17,11 +17,13 @@
         <h1>Contents of <%= folder.name %></h1>
         <div class="top-bar flex justify-between">
             <div class="navigation flex">
+                
                 <a href="/library" class="back-link">← Back to Root</a>
-                <% if (folder.parent) { %>
+                <% if (folder.parentId) { %>
                     <a href="/library/<%= folder.parent.id %>" class="back-link">← Back to <%= folder.parent.name %></a>
                 <% }; %>
             </div>
+            
             <div class="flex gap-6">
                 <form action="/library/<%= folder.id %>/add-subfolder" method="POST">
                     <button type="submit">New Folder</button>
@@ -59,7 +61,7 @@
                                     edit-target-id="<%= subfolder.id %>"  
                                     class="block px-4 py-2 text-sm text-gray-700">
                                 Edit
-                            </a>
+                            </button>
                             <form method="POST" action="/library/folder/<%= subfolder.id %>/delete">
                                 <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700">
                                     Delete
@@ -76,12 +78,15 @@
                         <td><%= file.createdAt.toDateString() %></td>
                         <td><%= file.updatedAt.toDateString() %></td>
                         <td>
+                            <div class="download">
+                                <a href="/library/file/<%=file.id%>/download">Download</a>
+                            </div>
                             <button data-modal-toggle="edit-modal" 
                                     edit-type="file" 
                                     edit-target-id="<%= file.id %>"  
                                     class="block px-4 py-2 text-sm text-gray-700">
                                 Edit
-                        </a>
+                            </button>
                             <form method="POST" action="/library/file/<%= file.id %>/delete">
                                 <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700">
                                     Delete

@@ -73,8 +73,9 @@ module.exports = {
                     userId: userId,
                 },
                 include: {
-                  subfolders: true,
-                  files: true
+                    parent: true,
+                    subfolders: true,
+                    files: true
                 }
             });
             return folder;
