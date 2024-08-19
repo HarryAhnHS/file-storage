@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 const db = require('../db/queries');
 
 // Validation middleware for the sign-up form
@@ -37,4 +37,21 @@ const validateSignUp = [
         })
 ];
 
-module.exports = { validateSignUp };
+const validateRename = [
+    body('name')
+        .trim()
+        .notEmpty().withMessage('Name is required')
+]
+
+const validateFile = [
+    body('uploaded_file')
+        .custom((value, { req }) => {
+            // Check if a file has been uploaded
+            if (!req.file) {
+                throw new Error('File is required');
+            }
+            return true;
+        })
+];
+
+module.exports = { validateSignUp, validateRename, validateFile };

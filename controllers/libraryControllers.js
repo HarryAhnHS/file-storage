@@ -1,6 +1,8 @@
 const db = require('../db/queries');
 const cloudinary = require('../utils/cloudinary.config');
 
+const validators = require('../utils/validators');
+
 module.exports = {
     redirectToRoot: async (req, res) => {
         const rootFolder = await db.getRootFolder(req.user.id);
@@ -22,7 +24,7 @@ module.exports = {
 
         res.redirect(`/library/${parentId}`);
     },
-    uploadFile: async (req, res) => {
+    uploadFile: [validators.validateFile, async (req, res) => {
         console.log('uploaded file to uploads:', req.file); // Log the file to see what is being received
 
         const folderId = req.params.folderId;
@@ -45,9 +47,8 @@ module.exports = {
             console.error('Upload failed:', error);
             throw error;
         }
-
-    },
-    renameByTypeAndId: async (req, res) => {
+    }],
+    renameByTypeAndId: [validators.validateRename, async (req, res) => {
         const type = req.params.type;
         const idToUpdate = req.params.id;
 
@@ -58,7 +59,7 @@ module.exports = {
         // Redirect back to the referring page
         const redirectUrl = req.get('Referer') || `/`;
         res.redirect(redirectUrl);
-    },
+    }],
     deleteByTypeAndId: async (req, res) => {
         const type = req.params.type;
         const idToUpdate = req.params.id;
