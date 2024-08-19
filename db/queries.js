@@ -100,6 +100,23 @@ module.exports = {
             throw error;
         }
     },
+    addFile: async (name, path, size, folderId) => {
+        try {
+            const newFile = await prisma.file.create({
+                data: {
+                    name: name,
+                    path: path,
+                    size: size,           // User ID to associate with the new subfolder
+                    folderId: folderId  // Set parentId to link to the parent folder
+                }
+            });
+            return newFile;
+        }
+        catch(error) {
+            console.error('Error creating file', error);
+            throw error;
+        }
+    },
     renameEntry: async(type, id, newName) => {
         try {
             const query = {

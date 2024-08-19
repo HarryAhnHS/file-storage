@@ -1,4 +1,5 @@
 const db = require('../db/queries');
+const cloudinary = require('../utils/cloudinary.config');
 
 module.exports = {
     redirectToRoot: async (req, res) => {
@@ -20,6 +21,31 @@ module.exports = {
         await db.addSubfolder(userId, parentId);
 
         res.redirect(`/library/${parentId}`);
+    },
+    uploadFile: async (req, res) => {
+        console.log('uploaded file to uploads:', req.file); // Log the file to see what is being received
+
+        const folderId = req.params.folderId;
+        // Multer metadata of upload
+        const { originalname, size, path } = req.file;
+
+        try {
+            // Upload file to Cloudinary
+            const result = await cloudinary.uploader.upload(path, {
+                resource_type: 'auto'
+            });
+    
+            // Add file to database
+            await db.addFile(originalname, result.secure_url, size, folderId);
+    
+            // Redirect back to the referring page
+            const redirectUrl = req.get('Referer') || `/`;
+            res.redirect(redirectUrl);
+        } catch (error) {
+            console.error('Upload failed:', error);
+            throw error;
+        }
+
     },
     renameByTypeAndId: async (req, res) => {
         const type = req.params.type;

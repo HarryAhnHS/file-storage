@@ -26,7 +26,8 @@
                 <form action="/library/<%= folder.id %>/add-subfolder" method="POST">
                     <button type="submit">New Folder</button>
                 </form>
-                <form action="/library/<%= folder.id %>/upload" method="POST">
+                <form action="/library/<%= folder.id %>/upload" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="uploaded_file" />
                     <button type="submit">Upload File</button>
                 </form>
             </div>
