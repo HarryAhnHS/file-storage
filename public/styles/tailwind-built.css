@@ -860,11 +860,17 @@ video {
 .self-end {
   align-self: flex-end;
 }
+.overflow-x-auto {
+  overflow-x: auto;
+}
 .overflow-y-auto {
   overflow-y: auto;
 }
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+.overflow-x-scroll {
+  overflow-x: scroll;
 }
 .whitespace-nowrap {
   white-space: nowrap;
@@ -1416,8 +1422,15 @@ video {
   .md\:inset-0 {
     inset: 0px;
   }
+  .md\:gap-6 {
+    gap: 1.5rem;
+  }
   .md\:p-5 {
     padding: 1.25rem;
+  }
+  .md\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }
 @media (prefers-color-scheme: dark) {
