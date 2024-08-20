@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css",
-    "watch:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css --watch"
+    "watch:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css --watch",
+    "build": "npx prisma migrate deploy && npm run build:css",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
