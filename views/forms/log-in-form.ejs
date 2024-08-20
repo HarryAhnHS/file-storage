@@ -21,22 +21,32 @@
 
             <%- include('../partials/errors.ejs') %>
             <form action="/log-in" method="POST" class="w-[400px]">
-                <div class="grid gap-6 mb-6">
-                    <div>
-                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username:</label>
-                        <input type="text" id="username" name="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                <div class="">
+                    <div class="grid gap-6">
+                        <div>
+                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username:</label>
+                            <input type="text" id="username" name="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        </div>
+                        <div>
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password:</label>
+                            <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        </div>
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Login</button>
                     </div>
-                    <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password:</label>
-                        <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                    <div class="grid">
+                        <div class="text-center py-2 text-sm">or</div>
+                        <a 
+                            href="/log-in/demo"
+                            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+                            Login with demo account
+                        </a>
                     </div>
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Login</button>
+                    <div class="flex text-sm justify-between w-[400px] mt-4">
+                        <a href="#" class="underline text-blue-600">Help</a>
+                        <p>Don't have an account? <a href="/sign-up" class="underline text-blue-600">Sign up here</a></p>
+                    </div>
                 </div>
             </form> 
-            <div class="flex text-sm justify-between w-[400px]">
-                    <a href="#" class="underline text-blue-600">Help</a>
-                    <p>Don't have an account? <a href="/sign-up" class="underline text-blue-600">Sign up here.</a></p>
-            </div>
             
         </div>
     </div>

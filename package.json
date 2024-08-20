@@ -8,9 +8,11 @@
     "build:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css",
     "watch:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css --watch",
 
+    "setupdemo": "node utils/setupDemoScript.js",
     "start": "node app.js",
     "migrate": "prisma migrate deploy",
-    "deploy": "npm run migrate && npm start"
+
+    "deploy": "npm run migrate && npm start && npm run setupdemo"
   },
   "keywords": [],
   "author": "",

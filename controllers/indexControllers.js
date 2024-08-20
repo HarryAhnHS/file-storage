@@ -1,3 +1,4 @@
+require('dotenv').config()
 const db = require('../db/queries');
 
 const { validationResult } = require("express-validator");
@@ -23,6 +24,18 @@ module.exports = {
     }],
     logInGet: (req, res) => res.render('forms/log-in-form'),
     logInPost: (req, res, next) => {
+        authAndLogin(req, res, next);
+    },
+    logInWithDemo: (req, res, next) => {
+        // Define demo account credentials
+        const demoUsername = "demo";
+        const demoPassword = process.env.DEMO_PASSWORD;
+
+        // Create a fake request body with the demo credentials
+        req.body.username = demoUsername;
+        req.body.password = demoPassword;
+
+        // Use the authAndLogin function to handle the authentication and login process
         authAndLogin(req, res, next);
     },
     logOutGet: async (req, res, next) => {

@@ -24,7 +24,7 @@ function authAndLogin(req, res, next) {
                 return next(err); // Handle errors from req.logIn
             }
             // Redirect on successful login
-            res.redirect('/');
+            res.redirect('/library');
         });
     })(req, res, next);
 }
