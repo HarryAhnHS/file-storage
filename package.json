@@ -2,13 +2,11 @@
   "name": "file-storage",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css",
-    "watch:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css --watch",
-    "build": "npx prisma migrate deploy && npm run build:css",
-    "start": "node index.js"
+    "watch:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css --watch"
   },
   "keywords": [],
   "author": "",
