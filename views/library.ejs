@@ -47,6 +47,7 @@
                 <button data-modal-toggle="upload-modal" 
                         task="upload"
                         parent-name="<%= folder.name %>" 
+                        id="open-upload-btn"
                         class="flex items-center px-4 py-2 text-blue-600 hover:underline">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
@@ -285,6 +286,25 @@
                     const modal = document.getElementById(modalId);
                     modal.close();
                 });
+            });
+
+            // Initialize upload modal to defaults at each open close
+            const fileInput = document.getElementById('uploaded_file');
+            const fileNameContainer = document.getElementById('file-name-container');
+            const fileNameSpan = document.getElementById('file-name');
+            const errorContainer = document.getElementById('file-error-container');
+            const modalOpenButton = document.getElementById('open-upload-btn'); // The button that opens the modal
+
+            // Reset the error container and file input when the modal is opened
+            modalOpenButton.addEventListener('click', function() {
+                // Clear the error container
+                errorContainer.innerHTML = '';
+                errorContainer.classList.add('hidden');
+                
+                // Reset the file input and file name display
+                fileInput.value = '';
+                fileNameSpan.textContent = 'No file chosen';
+                fileNameContainer.style.display = 'none';
             });
         });
 

@@ -2,7 +2,10 @@ const libraryControllers = require('../controllers/libraryControllers');
 const express = require('express');
 
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ 
+    limits: { fileSize: 10485760 },
+    dest: 'uploads/' 
+})
 
 const libraryRouter = express.Router();
 

@@ -54,6 +54,11 @@ module.exports = {
 
 
     uploadFile: async (req, res) => {
+        if (!req.file) {
+            // Redirect back to the referring page
+            const redirectUrl = req.get('Referer') || `/`;
+            return res.redirect(redirectUrl);
+        }
         console.log('uploaded file to uploads:', req.file); // Log the file to see what is being received
 
         const folderId = req.params.folderId;
