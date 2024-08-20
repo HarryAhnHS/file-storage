@@ -12,7 +12,7 @@
     "start": "node app.js",
     "migrate": "prisma migrate deploy",
 
-    "deploy": "npm run migrate && npm start && npm run setupdemo"
+    "deploy": "npm run migrate &&  npm run setupdemo && npm start"
   },
   "keywords": [],
   "author": "",
