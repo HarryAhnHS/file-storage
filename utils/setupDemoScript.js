@@ -2,6 +2,8 @@ require('dotenv').config()
 
 const db = require('../db/queries'); // Adjust the path according to your project structure
 
+console.log("script running");
+
 async function setupDemoUser() {
     const demoUsername = "demo";
     const demoPassword = process.env.DEMO_PASSWORD;
