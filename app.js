@@ -46,13 +46,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Session Debugging Middleware
-// app.use((req, res, next) => {
-//   console.log("session: ", req.session);
-//   console.log("user: ", req.user);
-//   next();
-// });
-
 app.use("/", indexRouter);
 app.use("/library", auth.isAuth, libraryRouter);
 
@@ -63,4 +56,4 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log("app listening on port", port));
+app.listen(port, "0.0.0.0", () => console.log("app listening on port", port));
