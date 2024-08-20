@@ -20,3 +20,4 @@ A simple file storage system built with Express.js, EJS, and Tailwind CSS. This 
 - **Validation**: express-validator
 - **Utilities**: date-fns
 - **Session Management**: express-session, connect-pg-simple
+- **Deployment (paas)**: Railway (app server), Supabase (postgresql server)
