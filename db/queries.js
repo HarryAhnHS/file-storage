@@ -74,8 +74,16 @@ module.exports = {
                 },
                 include: {
                     parent: true,
-                    subfolders: true,
-                    files: true
+                    subfolders: {
+                        orderBy: {
+                            updatedAt: 'desc' // Orders subfolders by updatedAt in descending order
+                        }
+                    },
+                    files: {
+                        orderBy: {
+                            updatedAt: 'desc' // Orders files by updatedAt in descending order
+                        }
+                    }
                 }
             });
             return folder;
