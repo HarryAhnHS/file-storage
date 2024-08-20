@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css",
     "watch:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css --watch",
-    "start": "node app.js && npx prisma migrate deploy"
+
+    "start": "node app.js",
+    "migrate": "prisma migrate deploy",
+    "deploy": "npm run migrate && npm start"
   },
   "keywords": [],
   "author": "",
