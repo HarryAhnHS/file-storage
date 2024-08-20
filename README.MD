@@ -2,6 +2,8 @@
 
 A simple file storage system built with Express.js, EJS, and Tailwind CSS. This project allows users to sign up, log in, and manage their files and folders. It uses PostgreSQL for data storage and integrates with Cloudinary for file storage.
 
+Link to deployment: https://file-storage-production.up.railway.app/
+
 ## Features
 
 - User authentication with Passport.js
