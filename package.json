@@ -13,7 +13,7 @@
     "migrate": "prisma migrate deploy",
 
     "deploy": "npm run migrate &&  npm run setupdemo && npm start",
-    "build": "npm start && prisma generate && prisma migrate && npm run setupdemo"
+    "build": "prisma generate && prisma migrate && npm start && npm run setupdemo"
   },
   "keywords": [],
   "author": "",
