@@ -12,7 +12,8 @@
     "start": "node app.js",
     "migrate": "prisma migrate deploy",
 
-    "deploy": "npm run migrate &&  npm run setupdemo && npm start"
+    "deploy": "npm run migrate &&  npm run setupdemo && npm start",
+    "build": "npm run setupdemo && npm start && prisma generate && prisma migrate"
   },
   "keywords": [],
   "author": "",
