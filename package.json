@@ -10,9 +10,9 @@
 
     "setupdemo": "node utils/setupDemoScript.js",
     "start": "node app.js",
-    "migrate": "prisma migrate deploy && prisma generate",
+    "migrate": "prisma migrate deploy",
 
-    "deploy": "npm run migrate &&  npm run setupdemo && npm start"
+    "build": "prisma generate && npm run migrate"
   },
   "keywords": [],
   "author": "",
