@@ -10,7 +10,7 @@
 
     "setupdemo": "node utils/setupDemoScript.js",
     "start": "node app.js",
-    "build": "npx prisma generate"
+    "build": "npx prisma migrate dev && npx prisma generate"
   },
   "keywords": [],
   "author": "",
