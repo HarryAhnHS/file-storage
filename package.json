@@ -9,7 +9,7 @@
     "watch:css": "postcss public/styles/tailwind.css -o public/styles/tailwind-built.css --watch",
 
     "setupdemo": "node utils/setupDemoScript.js",
-    "start": "node app.js",
+    "start": "node app.js && prisma generate",
     "build": "npx prisma generate"
   },
   "keywords": [],
